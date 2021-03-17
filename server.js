@@ -4,10 +4,9 @@ const hbs = require('express-handlebars');
 
 const app = express();
 app.engine('hbs', hbs({ extname: 'hbs', layoutsDir: './layouts', defaultLayout: 'main' }));
+app.set('view engine', '.hbs');
 
-app.set('view engine', 'hbs');
-
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname + '/public')));
 
 app.get('/', (req, res) => {
   res.render('index');

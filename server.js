@@ -10,6 +10,10 @@ app.use(express.static(path.join(__dirname + '/public')));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+app.use('/user', (req, res, next) => {
+  res.render('user');
+});
+
 app.get('/', (req, res) => {
   res.render('index');
 });
@@ -22,22 +26,26 @@ app.get('/about', (req, res) => {
   res.render('about');
 });
 
-app.post('/contact/send-message', (req, res) => {
-  const { author, sender, title, message, file } = req.body;
+app.get('/contact', (req, res) => {
+  res.render('contact');
+});
 
-  if (author && sender && title && message && file) {
-    res.render('contact', { isSent: true, fileName: file });
-  } else {
-    res.render('contact', { isError: true });
-  }
+app.get('/history', (req, res) => {
+  res.render('history');
 });
 
 app.get('/info', (req, res) => {
   res.render('info');
 });
 
-app.get('/history', (req, res) => {
-  res.render('history', { layout: false });
+app.post('/contact/send-message', (req, res) => {
+  const { author, sender, title, message, file } = req.body;
+
+  if (author && sender && title && message && file) {
+    res.render('contact', { isSent: true, file: fileName });
+  } else {
+    res.render('contact', { isError: true });
+  }
 });
 
 app.use((req, res) => {
